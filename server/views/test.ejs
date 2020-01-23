@@ -1,0 +1,71 @@
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+    <title></title>
+</head>
+
+<body>
+    <h2 id="brPitanja"></h2>
+    <div style="visibility: hidden;" id="sva"> <%-pitanja%> </div>
+    <div style="margin-left: 10%;">
+        <p id="pitanje"></p>
+        <button onclick="proveri(this.id)" type="submit" class="btn btn-primary" id="odg1"></button><br><br>
+        <button onclick="proveri(this.id)" type="submit" class="btn btn-primary" id="odg2"></button><br><br>
+        <button onclick="proveri(this.id)" type="submit" class="btn btn-primary" id="odg3"></button><br><br>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    var div = document.getElementById('sva');
+    // const data = JSON.parse(div.firstChild.textContent);
+    const data = JSON.parse(div.firstChild.textContent);
+    console.log(data[1].pitanje);
+
+    window.onload = dodeli;
+
+    i = 0;
+    function dodeli() {
+        document.getElementById('brPitanja').innerHTML = i + 1 + '/42';
+        document.getElementById('pitanje').innerHTML = data[i].pitanje;
+        document.getElementById('odg1').innerHTML = data[i].odg1;
+        document.getElementById('odg2').innerHTML = data[i].odg2;
+        document.getElementById('odg3').innerHTML = data[i].odg3;
+        i++;
+    }
+    counter =0;
+    function proveri(){
+        if(i==42){
+            if(counter>=38){
+                alert('Cestitamo polozili ste sa '+ counter +' tacnih odgovora');
+            }
+            else{
+                alert('Nazalost niste polozili sa '+ counter +' tacnih odgovora')
+            }
+        }
+    }
+
+    function proveri(odg) {
+        console.log('pritisnuto je dugme:' + odg);
+        if (document.getElementById(odg).firstChild.data === data[i - 1].tacanOdg) {
+            alert('Tacan odgovor');
+            counter++;
+            dodeli();
+            proveri();
+
+        }
+        else { 
+            alert('Netacan odgovor'); 
+            dodeli();
+            proveri();
+        }
+
+    }
+
+
+</script>
